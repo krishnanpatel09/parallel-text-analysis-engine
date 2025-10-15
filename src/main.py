@@ -1,17 +1,19 @@
-from utils.logger import log_header, log_info, log_success
 from utils.file_loader import load_text_files
+from sequential.word_count_seq import compute_word_frequencies
+from utils.logger import log_header, log_info, log_success
 
 if __name__ == "__main__":
-    log_header("Phase 1 — File Loading Sanity Check")
+    log_header("Sequential Pipeline — Word Frequency Stage")
 
     folder = "datasets/test"
     docs = load_text_files(folder)
 
     if not docs:
-        log_info("No documents found. Add .txt files under datasets/small/ and re-run.")
+        log_info("No documents found. Add .txt files and re-run.")
     else:
-        log_success("Documents loaded successfully 🎉")
-        # Show a tiny preview so we know the content came through
-        for i, d in enumerate(docs, start=1):
-            preview = d.strip().splitlines()[0][:80]
-            log_info(f"Doc {i}: \"{preview}\"")
+        freqs = compute_word_frequencies(docs)
+        log_success("Word frequency analysis completed!")
+
+        log_info("Top 10 most frequent words:")
+        for word, count in freqs.most_common(10):
+            print(f"{word}: {count}")
