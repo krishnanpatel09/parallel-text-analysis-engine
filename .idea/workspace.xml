@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a26a7045-284e-491b-b2f5-06f877c98cae" name="Changes" comment="Initial-Setup" />
+    <list default="true" id="a26a7045-284e-491b-b2f5-06f877c98cae" name="Changes" comment="Loading_Testing_datasets">
+      <change afterPath="$PROJECT_DIR$/src/sequential/word_count_seq.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/text_preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +23,25 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Vishwa1017"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Vishwa1017/parallel-text-analysis-engine.git",
+    "accountId": "14b07251-4bd3-4e25-8b1d-42941d4970b8"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 7
 }]]></component>
@@ -34,8 +56,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/viswa/PycharmProjects/parallel-text-analysis-engine/src/utils",
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "C:/Users/viswa/PycharmProjects/parallel-text-analysis-engine/datasets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -47,7 +69,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\datasets" />
       <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\src\utils" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\src\sequential" />
+      <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\datasets\test" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -65,7 +92,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760529045317</updated>
-      <workItem from="1760529046483" duration="1636000" />
+      <workItem from="1760529046483" duration="4360000" />
     </task>
     <task id="LOCAL-00001" summary="Initial-Setup">
       <option name="closed" value="true" />
@@ -83,7 +110,23 @@
       <option name="project" value="LOCAL" />
       <updated>1760530650025</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Initial-Setup">
+      <option name="closed" value="true" />
+      <created>1760530770776</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1760530770776</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Loading_Testing_datasets">
+      <option name="closed" value="true" />
+      <created>1760532372503</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1760532372503</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,6 +145,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial-Setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial-Setup" />
+    <MESSAGE value="Loading_Testing_datasets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading_Testing_datasets" />
   </component>
 </project>
