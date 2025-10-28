@@ -6,6 +6,7 @@ from utils.file_loader import load_text_files
 from sequential.word_count_seq import compute_word_frequencies
 from utils.TFIDF_Impl import TFIDFComputer
 from utils.benchMarkResults import Benchmarker
+from utils.resultVisualiser import ResultsVisualizer
 from utils.logger import log_header, log_info, log_success
 
 if __name__ == "__main__":
@@ -77,9 +78,12 @@ if __name__ == "__main__":
     for result in results:
         print(result)
     
+    # Generate visualizations
+    ResultsVisualizer.generate_all_visualizations(results)
+    
     # Delete datasets folder after completion
     log_info("Cleaning up datasets...")
-    time.sleep(1)  # Give OS time to release file handles
+    time.sleep(1)
     
     if os.path.exists("datasets"):
         try:
