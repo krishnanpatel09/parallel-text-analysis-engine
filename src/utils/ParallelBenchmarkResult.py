@@ -76,14 +76,23 @@ class ParallelBenchmarkSuite:
             self.parallel_results.append(result)
             
             print(f"✓ {impl_name} ({num_workers} workers): {total_time:.4f}s, Speedup: {speedup:.2f}x")
-    
+
     def save_results(self, filename="results/parallel_comprehensive.json"):
-        """Save all results to JSON"""
+        """Save all results to JSON safely"""
         data = {
-            "sequential": [r.to_dict() for r in self.sequential_results.values()],
-            "parallel": [r.to_dict() for r in self.parallel_results]
+            "sequential": [
+                r.to_dict() if hasattr(r, "to_dict") else r.__dict__
+                for r in self.sequential_results.values()
+            ],
+            "parallel": [
+                r.to_dict() if hasattr(r, "to_dict") else r.__dict__
+                for r in self.parallel_results
+                if hasattr(r, "implementation")  # keep only real parallel results
+            ]
         }
-        
+
         os.makedirs("results", exist_ok=True)
         with open(filename, 'w') as f:
             json.dump(data, f, indent=2)
+
+        print(f"✅ Parallel benchmark results saved to {filename}")

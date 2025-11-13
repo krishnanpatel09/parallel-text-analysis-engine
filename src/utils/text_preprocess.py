@@ -4,10 +4,10 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from utils.logger import log_info, log_warning, log_success
 
-
-nltk.download("punkt", quiet=True)
-nltk.download("punkt_tab", quiet=True)
-nltk.download("stopwords", quiet=True)
+#
+# nltk.download("punkt", quiet=True)
+# nltk.download("punkt_tab", quiet=True)
+# nltk.download("stopwords", quiet=True)
 
 def clean_and_tokenize(text: str) -> list[str]:
     """

@@ -5,10 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a26a7045-284e-491b-b2f5-06f877c98cae" name="Changes" comment="Loading_Testing_datasets">
-      <change afterPath="$PROJECT_DIR$/src/sequential/word_count_seq.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/text_preprocess.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/dataset_metrics.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/efficiency_large.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/efficiency_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/efficiency_small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/execution_time.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/parallel_comprehensive.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/sequential_baseline.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/speedup_curves_large.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/speedup_curves_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/speedup_curves_small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_futures_process.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_multiprocessing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_numba.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_threading.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/throughput.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/results/total_execution_time.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ParallelBenchmarkResult.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ParallelBenchmarkResult.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ParallelTFIDF.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ParallelTFIDF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/dataSetGenrator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/dataSetGenrator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/text_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/text_preprocess.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,21 +47,21 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Vishwa1017"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Vishwa1017&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Vishwa1017/parallel-text-analysis-engine.git",
-    "accountId": "14b07251-4bd3-4e25-8b1d-42941d4970b8"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Vishwa1017/parallel-text-analysis-engine.git&quot;,
+    &quot;accountId&quot;: &quot;14b07251-4bd3-4e25-8b1d-42941d4970b8&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="346LOtI8rvw39robVepNGgOgOLy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -53,10 +70,12 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.ParallelTFIDF.executor": "Run",
+    "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature/gurwinder",
     "last_opened_file_path": "C:/Users/viswa/PycharmProjects/parallel-text-analysis-engine/datasets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -80,7 +99,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.26830.99" />
         <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
       </set>
     </attachedChunks>

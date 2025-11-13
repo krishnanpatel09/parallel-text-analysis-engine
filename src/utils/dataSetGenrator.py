@@ -28,5 +28,5 @@ class DatasetGenerator:
     def _generate_sample_text(file_id):
         """Generate sample text content"""
         words = ["python", "data", "analysis", "text", "processing", "parallel", 
-                 "distributed", "algorithm", "performance", "optimization"] * 100
+                 "distributed", "algorithm", "performance", "optimization","is","the"] * 100
         return " ".join(words[file_id:file_id+500])
