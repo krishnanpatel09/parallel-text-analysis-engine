@@ -5,10 +5,10 @@
       "num_files": 10,
       "total_tokens": 5000,
       "unique_words": 10,
-      "word_freq_time": 0.10366415977478027,
-      "tfidf_time": 0.0,
-      "total_time": 0.10366415977478027,
-      "throughput": 48232.677628053425,
+      "word_freq_time": 0.09836244583129883,
+      "tfidf_time": 0.002012014389038086,
+      "total_time": 0.10037446022033691,
+      "throughput": 49813.46837655968,
       "avg_tokens_per_file": 500.0
     },
     {
@@ -16,10 +16,10 @@
       "num_files": 100,
       "total_tokens": 50000,
       "unique_words": 10,
-      "word_freq_time": 0.5400867462158203,
-      "tfidf_time": 0.016160011291503906,
-      "total_time": 0.5562467575073242,
-      "throughput": 89888.16442555467,
+      "word_freq_time": 1.442070484161377,
+      "tfidf_time": 0.016710996627807617,
+      "total_time": 1.4587814807891846,
+      "throughput": 34275.181484310146,
       "avg_tokens_per_file": 500.0
     },
     {
@@ -27,10 +27,10 @@
       "num_files": 1000,
       "total_tokens": 375250,
       "unique_words": 10,
-      "word_freq_time": 5.8945746421813965,
-      "tfidf_time": 0.11093425750732422,
-      "total_time": 6.005508899688721,
-      "throughput": 62484.29671288141,
+      "word_freq_time": 5.3131372928619385,
+      "tfidf_time": 0.11960864067077637,
+      "total_time": 5.432745933532715,
+      "throughput": 69071.88456648271,
       "avg_tokens_per_file": 375.25
     }
   ]

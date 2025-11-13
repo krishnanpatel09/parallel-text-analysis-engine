@@ -1,15 +1,18 @@
 import os
+import sys
 import time
 import shutil
+import argparse
 from utils.dataSetGenrator import DatasetGenerator
 from utils.file_loader import load_text_files
 from sequential.word_count_seq import compute_word_frequencies
 from utils.TFIDF_Impl import TFIDFComputer
-from utils.benchMarkResults import Benchmarker
+from utils.benchMarkResults import Benchmarker, BenchmarkResults
 from utils.resultVisualiser import ResultsVisualizer
-from utils.logger import log_header, log_info, log_success
+from utils.logger import log_header, log_info, log_success, log_warning
 
-if __name__ == "__main__":
+def run_sequential_baseline():
+    """Run sequential baseline analysis"""
     log_header("Sequential Baseline — Multiple Dataset Sizes")
     
     # Generate datasets
@@ -81,7 +84,149 @@ if __name__ == "__main__":
     # Generate visualizations
     ResultsVisualizer.generate_all_visualizations(results)
     
-    # Delete datasets folder after completion
+    return results
+
+
+def run_parallel_analysis(sequential_results=None):
+    """Run parallel analysis with multiple implementations"""
+    log_header("Parallel Implementation — Comprehensive Evaluation")
+    
+    try:
+        from utils.MultiprocessingWordCount import MultiprocessingWordCount
+        from utils.ThreadedWordCount import ThreadedWordCount
+        from utils.NumbaWordCount import NumbaWordCount
+        from utils.FuturesWordCount import FuturesWordCount
+        from utils.ParallelTFIDF import ParallelTFIDF
+        from utils.ParallelBenchmarkResult import ParallelBenchmarkSuite
+        from utils.AdvancedVisualizations import AdvancedVisualizations
+    except ImportError as e:
+        log_warning(f"Parallel implementations not found: {e}")
+        log_info("Please ensure all parallel implementation files are created.")
+        return []
+    
+    # Load sequential results if not provided
+    if sequential_results is None:
+        try:
+            import json
+            with open('results/sequential_baseline.json', 'r') as f:
+                seq_data = json.load(f)
+            
+            sequential_results = []
+            for result in seq_data.get('results', []):
+                sequential_results.append(BenchmarkResults(
+                    dataset_size=result['dataset_size'],
+                    num_files=result['num_files'],
+                    total_tokens=result['total_tokens'],
+                    unique_words=result['unique_words'],
+                    execution_time=result['total_time'],
+                    throughput=result['throughput'],
+                    avg_tokens_per_file=result['avg_tokens_per_file'],
+                    word_freq_time=result['word_freq_time'],
+                    tfidf_time=result['tfidf_time'],
+                    total_time=result['total_time']
+                ))
+            log_info(f"✓ Loaded {len(sequential_results)} sequential baseline results")
+        except FileNotFoundError:
+            log_warning("Sequential baseline results not found. Running sequential baseline first...")
+            sequential_results = run_sequential_baseline()
+    
+    # Check if datasets exist
+    if not os.path.exists('datasets/test/small'):
+        log_info("Generating datasets...")
+        DatasetGenerator.create_datasets()
+    
+    # Initialize benchmark suite
+    benchmark_suite = ParallelBenchmarkSuite(sequential_results)
+    
+    dataset_sizes = ['small', 'medium', 'large']
+    
+    for size in dataset_sizes:
+        log_header(f"Processing {size.upper()} Dataset - Parallel")
+        
+        try:
+            docs = load_text_files(f"datasets/test/{size}")
+            
+            if not docs:
+                log_warning(f"No documents found in datasets/test/{size}")
+                continue
+            
+            log_info(f"✓ Loaded {len(docs)} documents")
+            
+            # Benchmark all implementations
+            print("\n1. Multiprocessing Implementation:")
+            try:
+                benchmark_suite.benchmark_implementation(
+                    "multiprocessing",
+                    MultiprocessingWordCount.compute_parallel,
+                    ParallelTFIDF.compute_multiprocessing,
+                    docs, size
+                )
+            except Exception as e:
+                log_warning(f"Error in multiprocessing: {e}")
+            
+            print("\n2. Threading Implementation:")
+            try:
+                benchmark_suite.benchmark_implementation(
+                    "threading",
+                    lambda docs, w: ThreadedWordCount(w).compute_parallel(docs),
+                    ParallelTFIDF.compute_multiprocessing,
+                    docs, size
+                )
+            except Exception as e:
+                log_warning(f"Error in threading: {e}")
+            
+            print("\n3. Numba Implementation:")
+            try:
+                benchmark_suite.benchmark_implementation(
+                    "numba",
+                    NumbaWordCount.compute_parallel,
+                    ParallelTFIDF.compute_multiprocessing,
+                    docs, size
+                )
+            except Exception as e:
+                log_warning(f"Error in numba: {e}")
+            
+            print("\n4. Concurrent.futures Implementation:")
+            try:
+                benchmark_suite.benchmark_implementation(
+                    "futures_process",
+                    FuturesWordCount.compute_parallel_process,
+                    ParallelTFIDF.compute_multiprocessing,
+                    docs, size
+                )
+            except Exception as e:
+                log_warning(f"Error in futures: {e}")
+                
+        except Exception as e:
+            log_warning(f"Error processing {size} dataset: {e}")
+            continue
+    
+    # Save results
+    try:
+        benchmark_suite.save_results()
+        log_success("Parallel results saved successfully")
+    except Exception as e:
+        log_warning(f"Error saving parallel results: {e}")
+    
+    # Generate visualizations
+    log_info("Generating parallel visualizations...")
+    try:
+        for size in dataset_sizes:
+            AdvancedVisualizations.plot_speedup_curves(benchmark_suite.parallel_results, size)
+            AdvancedVisualizations.plot_efficiency(benchmark_suite.parallel_results, size)
+        
+        for impl in ['multiprocessing', 'threading', 'numba', 'futures_process']:
+            AdvancedVisualizations.plot_strong_scaling(benchmark_suite.parallel_results, impl)
+        
+        log_success("All parallel visualizations generated successfully")
+    except Exception as e:
+        log_warning(f"Error generating visualizations: {e}")
+    
+    return benchmark_suite.parallel_results
+
+
+def cleanup_datasets():
+    """Clean up generated datasets"""
     log_info("Cleaning up datasets...")
     time.sleep(1)
     
@@ -90,4 +235,61 @@ if __name__ == "__main__":
             shutil.rmtree("datasets")
             log_success("Datasets folder deleted successfully")
         except OSError as e:
-            log_info(f"Warning: Could not delete datasets folder: {e}")
+            log_warning(f"Could not delete datasets folder: {e}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description='Text Analysis Engine - Sequential and Parallel Implementation'
+    )
+    parser.add_argument(
+        '--mode',
+        type=str,
+        choices=['sequential', 'parallel', 'both'],
+        default='both',
+        help='Execution mode: sequential, parallel, or both (default: both)'
+    )
+    parser.add_argument(
+        '--no-cleanup',
+        action='store_true',
+        help='Keep dataset files after execution'
+    )
+    
+    args = parser.parse_args()
+    
+    print("="*70)
+    print("TEXT ANALYSIS ENGINE - PARALLEL IMPLEMENTATION PROJECT")
+    print("="*70)
+    
+    sequential_results = None
+    parallel_results = None
+    
+    try:
+        if args.mode in ['sequential', 'both']:
+            sequential_results = run_sequential_baseline()
+        
+        if args.mode in ['parallel', 'both']:
+            parallel_results = run_parallel_analysis(sequential_results)
+        
+        print("\n" + "="*70)
+        log_success("Analysis Complete!")
+        print("="*70)
+        
+        if sequential_results:
+            log_info(f"Sequential results: {len(sequential_results)} datasets analyzed")
+        if parallel_results:
+            log_info(f"Parallel results: {len(parallel_results)} benchmarks completed")
+        
+        log_info("Check the 'results/' folder for detailed reports and visualizations")
+        
+    except KeyboardInterrupt:
+        print("\n\nExecution interrupted by user.")
+    except Exception as e:
+        log_warning(f"Unexpected error: {e}")
+        import traceback
+        traceback.print_exc()
+    finally:
+        if not args.no_cleanup:
+            cleanup_datasets()
+        else:
+            log_info("Datasets preserved (--no-cleanup flag set)")
