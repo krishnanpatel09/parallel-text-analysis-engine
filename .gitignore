@@ -217,4 +217,4 @@ __marimo__/
 
 
 #data set files
-/src/datasets/test/*
+/src/datasets/*

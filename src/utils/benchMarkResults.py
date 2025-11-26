@@ -8,12 +8,27 @@ class BenchmarkResults:
     num_files: int
     total_tokens: int
     unique_words: int
-    execution_time: float
-    throughput: float  # tokens per second
+    execution_time: float  # Kept for backward compatibility
+    throughput: float
     avg_tokens_per_file: float
     word_freq_time: float
     tfidf_time: float
     total_time: float
+    
+    def to_dict(self):
+        """Convert to dictionary for JSON serialization"""
+        return {
+            'dataset_size': self.dataset_size,
+            'num_files': self.num_files,
+            'total_tokens': self.total_tokens,
+            'unique_words': self.unique_words,
+            'execution_time': self.execution_time,
+            'throughput': self.throughput,
+            'avg_tokens_per_file': self.avg_tokens_per_file,
+            'word_freq_time': self.word_freq_time,
+            'tfidf_time': self.tfidf_time,
+            'total_time': self.total_time
+        }
     
     def __str__(self):
         return f"""
@@ -46,9 +61,7 @@ class Benchmarker:
         word_freq_time: float,
         tfidf_time: float
     ) -> BenchmarkResults:
-        """
-        Create benchmark results with all metrics
-        """
+        """Create benchmark results with all metrics"""
         total_time = word_freq_time + tfidf_time
         throughput = total_tokens / total_time if total_time > 0 else 0
         avg_tokens_per_file = total_tokens / num_files if num_files > 0 else 0
@@ -58,7 +71,7 @@ class Benchmarker:
             num_files=num_files,
             total_tokens=total_tokens,
             unique_words=unique_words,
-            execution_time=total_time,
+            execution_time=total_time,  # Same as total_time
             throughput=throughput,
             avg_tokens_per_file=avg_tokens_per_file,
             word_freq_time=word_freq_time,

@@ -24,7 +24,7 @@ def run_sequential_baseline():
     results = []
     
     for size in dataset_sizes:
-        folder = Path(__file__).parent /"datasets"/"test"/size
+        folder = Path(__file__).parent / "datasets" / "test" / size
         log_header(f"Processing {size.upper()} dataset")
         
         # Load documents
@@ -133,7 +133,6 @@ def run_parallel_analysis(sequential_results=None):
         log_header(f"Processing {size.upper()} Dataset - Parallel")
         
         try:
-            # ✅ SAME PATH as sequential
             folder = Path(__file__).parent / "datasets" / "test" / size
             docs = load_text_files(str(folder))
             
@@ -144,7 +143,7 @@ def run_parallel_analysis(sequential_results=None):
             log_info(f"✓ Loaded {len(docs)} documents")
             
             # Benchmark Numba implementation
-            print("\n🚀 Numba Hybrid Implementation:")
+            print("\n🚀 Numba Hybrid Implementation (Word Count + TF-IDF):")
             benchmark_suite.benchmark_implementation(
                 "numba_hybrid",
                 NumbaWordCountHybrid.compute_parallel,
@@ -168,15 +167,37 @@ def run_parallel_analysis(sequential_results=None):
     # Generate visualizations
     log_info("Generating visualizations...")
     try:
+        # Overall comparison chart (Sequential vs Numba)
+        AdvancedVisualizations.plot_execution_time_comparison(
+            list(benchmark_suite.sequential_results.values()),
+            benchmark_suite.parallel_results
+        )
+        
+        # Per-dataset detailed charts
         for size in dataset_sizes:
-            AdvancedVisualizations.plot_speedup_curves(benchmark_suite.parallel_results, size)
-            AdvancedVisualizations.plot_efficiency(benchmark_suite.parallel_results, size)
+            AdvancedVisualizations.plot_speedup_curves(
+                list(benchmark_suite.sequential_results.values()),
+                benchmark_suite.parallel_results, 
+                size
+            )
+            AdvancedVisualizations.plot_efficiency(
+                list(benchmark_suite.sequential_results.values()),
+                benchmark_suite.parallel_results, 
+                size
+            )
         
-        AdvancedVisualizations.plot_strong_scaling(benchmark_suite.parallel_results, 'numba_hybrid')
+        # Strong scaling chart
+        AdvancedVisualizations.plot_strong_scaling(
+            list(benchmark_suite.sequential_results.values()),
+            benchmark_suite.parallel_results, 
+            'numba_hybrid'
+        )
         
-        log_success("Visualizations generated successfully")
+        log_success("All visualizations generated successfully")
     except Exception as e:
         log_warning(f"Error generating visualizations: {e}")
+        import traceback
+        traceback.print_exc()
     
     return benchmark_suite.parallel_results
 

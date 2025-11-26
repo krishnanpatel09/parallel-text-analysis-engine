@@ -5,7 +5,7 @@ import json
 
 @dataclass
 class ParallelBenchmarkResult:
-    """Simple benchmark result"""
+    """Parallel benchmark result with speedup metrics"""
     implementation: str
     dataset_size: str
     num_files: int
@@ -20,10 +20,24 @@ class ParallelBenchmarkResult:
     efficiency: float
     
     def to_dict(self):
-        return self.__dict__
+        """Convert to dictionary"""
+        return {
+            'implementation': self.implementation,
+            'dataset_size': self.dataset_size,
+            'num_files': self.num_files,
+            'num_workers': self.num_workers,
+            'total_tokens': self.total_tokens,
+            'unique_words': self.unique_words,
+            'word_freq_time': self.word_freq_time,
+            'tfidf_time': self.tfidf_time,
+            'total_time': self.total_time,
+            'throughput': self.throughput,
+            'speedup': self.speedup,
+            'efficiency': self.efficiency
+        }
 
 class ParallelBenchmarkSuite:
-    """Simple benchmarking suite"""
+    """Benchmarking suite for parallel implementations"""
     
     def __init__(self, sequential_results):
         self.sequential_results = {r.dataset_size: r for r in sequential_results}
@@ -31,7 +45,7 @@ class ParallelBenchmarkSuite:
     
     def benchmark_implementation(self, impl_name, word_count_func, tfidf_func, 
                                 docs, dataset_size, num_workers_list=[1, 2, 4, 8]):
-        """Benchmark with simple timing"""
+        """Benchmark with timing and speedup calculation"""
         
         for num_workers in num_workers_list:
             # Word frequency benchmark
@@ -48,12 +62,12 @@ class ParallelBenchmarkSuite:
             total_time = word_freq_time + tfidf_time
             total_tokens = sum(len(doc.split()) for doc in docs)
             
-            # Get sequential baseline
+            # Get sequential baseline time
             seq_time = self.sequential_results[dataset_size].total_time
             
-            # Calculate speedup
-            speedup = seq_time / total_time
-            efficiency = (speedup / num_workers) * 100
+            # Calculate speedup vs sequential baseline
+            speedup = seq_time / total_time if total_time > 0 else 0
+            efficiency = (speedup / num_workers) * 100 if num_workers > 0 else 0
             
             result = ParallelBenchmarkResult(
                 implementation=impl_name,
@@ -65,20 +79,20 @@ class ParallelBenchmarkSuite:
                 word_freq_time=word_freq_time,
                 tfidf_time=tfidf_time,
                 total_time=total_time,
-                throughput=total_tokens / total_time,
+                throughput=total_tokens / total_time if total_time > 0 else 0,
                 speedup=speedup,
                 efficiency=efficiency
             )
             
             self.parallel_results.append(result)
             
-            print(f"   ✓ {num_workers} workers: {total_time:.4f}s | Speedup: {speedup:.2f}x | Efficiency: {efficiency:.2f}%")
+            print(f"   ✓ {num_workers} workers: {total_time:.4f}s | "
+                  f"Speedup: {speedup:.2f}x | Efficiency: {efficiency:.2f}%")
 
     def save_results(self, filename="results/parallel_comprehensive.json"):
-        """Save results"""
+        """Save all results to JSON"""
         data = {
-            "sequential": [r.to_dict() if hasattr(r, "to_dict") else r.__dict__ 
-                          for r in self.sequential_results.values()],
+            "sequential": [r.to_dict() for r in self.sequential_results.values()],
             "parallel": [r.to_dict() for r in self.parallel_results]
         }
 
