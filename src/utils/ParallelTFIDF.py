@@ -1,96 +1,101 @@
-from multiprocessing import Pool, cpu_count
-import math
-from collections import defaultdict, Counter
 import numpy as np
 from numba import jit, prange
-
-# -------------------------------
-# 🧠 Top-level worker functions
-# -------------------------------
-
-def compute_df_chunk(docs_chunk):
-    """Document frequency computation (top-level for pickling)"""
-    df = defaultdict(int)
-    for doc in docs_chunk:
-        unique_terms = set(doc.lower().split())
-        for term in unique_terms:
-            df[term] += 1
-    return df
-
-def compute_tfidf_chunk(docs_chunk, idf):
-    """TF-IDF computation (top-level for pickling)"""
-    tfidf = defaultdict(float)
-    for doc in docs_chunk:
-        tf = Counter(doc.lower().split())
-        total_terms = len(doc.lower().split())
-        for term, count in tf.items():
-            tf_score = count / total_terms if total_terms > 0 else 0
-            tfidf[term] += tf_score * idf.get(term, 0)
-    return tfidf
-
-
-# -------------------------------
-# 🧩 Parallel TF-IDF Class
-# -------------------------------
+import math
+from collections import defaultdict
 
 class ParallelTFIDF:
-    """Multiple parallel TF-IDF implementations"""
-
+    """Simple Numba-accelerated TF-IDF"""
+    
     @staticmethod
-    def compute_multiprocessing(docs: list, num_workers=None):
-        """Multiprocessing-based TF-IDF"""
-        if num_workers is None:
-            num_workers = cpu_count()
-
-        # Split docs into chunks
-        chunk_size = max(1, len(docs) // num_workers)
-        chunks = [docs[i:i + chunk_size] for i in range(0, len(docs), chunk_size)]
-
-        # ---- Parallel DF computation ----
-        with Pool(num_workers) as pool:
-            df_results = pool.map(compute_df_chunk, chunks)
-
-        df = defaultdict(int)
-        for result in df_results:
-            for term, count in result.items():
-                df[term] += count
-
-        # ---- Compute IDF ----
-        n_docs = len(docs)
-        idf = {term: math.log(n_docs / (1 + count)) for term, count in df.items()}
-
-        # ---- Parallel TF-IDF computation ----
-        with Pool(num_workers) as pool:
-            tfidf_results = pool.starmap(compute_tfidf_chunk, [(chunk, idf) for chunk in chunks])
-
-        # Merge results
-        tfidf_scores = defaultdict(float)
-        for result in tfidf_results:
-            for term, score in result.items():
-                tfidf_scores[term] += score
-
-        # Average across docs
-        for term in tfidf_scores:
-            tfidf_scores[term] /= n_docs
-
-        return dict(sorted(tfidf_scores.items(), key=lambda x: x[1], reverse=True))
-
-    # -------------------------------
-    # 🧠 Numba-based OpenMP acceleration
-    # -------------------------------
+    @jit(nopython=True, parallel=True, fastmath=True)
+    def compute_tfidf_parallel(tf_matrix, df_array, num_docs):
+        """
+        Compute TF-IDF in parallel
+        
+        Args:
+            tf_matrix: [num_docs x vocab_size] term frequency matrix
+            df_array: [vocab_size] document frequency array
+            num_docs: total number of documents
+        
+        Returns:
+            tfidf_matrix: [num_docs x vocab_size]
+        """
+        num_docs_val, vocab_size = tf_matrix.shape
+        tfidf_matrix = np.zeros((num_docs_val, vocab_size), dtype=np.float64)
+        
+        # Compute IDF in parallel
+        idf = np.zeros(vocab_size, dtype=np.float64)
+        for term_idx in prange(vocab_size):
+            if df_array[term_idx] > 0:
+                idf[term_idx] = math.log(num_docs / (1.0 + df_array[term_idx]))
+        
+        # Compute TF-IDF in parallel (over documents)
+        for doc_idx in prange(num_docs_val):
+            for term_idx in range(vocab_size):
+                tfidf_matrix[doc_idx, term_idx] = tf_matrix[doc_idx, term_idx] * idf[term_idx]
+        
+        return tfidf_matrix
+    
     @staticmethod
-    @jit(nopython=True, parallel=True)
-    def compute_tf_numba(token_matrix, vocab_size):
-        """Numba-accelerated TF computation"""
-        n_docs = token_matrix.shape[0]
-        tf_matrix = np.zeros((n_docs, vocab_size), dtype=np.float64)
-
-        for doc_id in prange(n_docs):  # OpenMP parallel loop
-            doc_tokens = token_matrix[doc_id]
-            doc_length = np.sum(doc_tokens > -1)  # -1 = padding
-            for token_id in doc_tokens:
-                if token_id >= 0:
-                    tf_matrix[doc_id, token_id] += 1.0
-            if doc_length > 0:
-                tf_matrix[doc_id] /= doc_length
-        return tf_matrix
+    def compute(docs: list, num_workers=4):
+        """
+        Compute TF-IDF scores using Numba
+        
+        Args:
+            docs: List of document strings
+            num_workers: Number of threads
+        
+        Returns:
+            dict: Term -> average TF-IDF score
+        """
+        import numba
+        numba.set_num_threads(num_workers)
+        
+        # Build vocabulary
+        vocab = {}
+        for doc in docs:
+            for word in doc.lower().split():
+                if word not in vocab:
+                    vocab[word] = len(vocab)
+        
+        vocab_size = len(vocab)
+        num_docs = len(docs)
+        
+        # Build TF matrix and DF array
+        tf_matrix = np.zeros((num_docs, vocab_size), dtype=np.float64)
+        df_array = np.zeros(vocab_size, dtype=np.int64)
+        
+        for doc_idx, doc in enumerate(docs):
+            words = doc.lower().split()
+            word_count = len(words)
+            
+            # Track unique words in this doc
+            unique_words = set()
+            
+            for word in words:
+                if word in vocab:
+                    word_idx = vocab[word]
+                    tf_matrix[doc_idx, word_idx] += 1.0
+                    unique_words.add(word_idx)
+            
+            # Normalize TF by document length
+            if word_count > 0:
+                tf_matrix[doc_idx] /= word_count
+            
+            # Update document frequency
+            for word_idx in unique_words:
+                df_array[word_idx] += 1
+        
+        # Compute TF-IDF (Numba parallel)
+        tfidf_matrix = ParallelTFIDF.compute_tfidf_parallel(tf_matrix, df_array, num_docs)
+        
+        # Average TF-IDF across documents
+        tfidf_scores = {}
+        reverse_vocab = {idx: word for word, idx in vocab.items()}
+        
+        for term_idx in range(vocab_size):
+            avg_score = tfidf_matrix[:, term_idx].mean()
+            if avg_score > 0:
+                tfidf_scores[reverse_vocab[term_idx]] = float(avg_score)
+        
+        return tfidf_scores

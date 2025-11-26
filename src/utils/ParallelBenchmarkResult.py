@@ -1,13 +1,12 @@
 import os
 import time
 from dataclasses import dataclass
-from typing import List, Dict
 import json
 
 @dataclass
 class ParallelBenchmarkResult:
-    """Comprehensive parallel benchmark metrics"""
-    implementation: str  # e.g., "multiprocessing", "threading", "numba"
+    """Simple benchmark result"""
+    implementation: str
     dataset_size: str
     num_files: int
     num_workers: int
@@ -19,13 +18,12 @@ class ParallelBenchmarkResult:
     throughput: float
     speedup: float
     efficiency: float
-    scalability_index: float
     
     def to_dict(self):
         return self.__dict__
 
 class ParallelBenchmarkSuite:
-    """Comprehensive benchmarking suite"""
+    """Simple benchmarking suite"""
     
     def __init__(self, sequential_results):
         self.sequential_results = {r.dataset_size: r for r in sequential_results}
@@ -33,7 +31,7 @@ class ParallelBenchmarkSuite:
     
     def benchmark_implementation(self, impl_name, word_count_func, tfidf_func, 
                                 docs, dataset_size, num_workers_list=[1, 2, 4, 8]):
-        """Benchmark a parallel implementation with different worker counts"""
+        """Benchmark with simple timing"""
         
         for num_workers in num_workers_list:
             # Word frequency benchmark
@@ -46,16 +44,16 @@ class ParallelBenchmarkSuite:
             tfidf_scores = tfidf_func(docs, num_workers)
             tfidf_time = time.time() - start
             
+            # Calculate metrics
             total_time = word_freq_time + tfidf_time
             total_tokens = sum(len(doc.split()) for doc in docs)
             
-            # Calculate speedup
+            # Get sequential baseline
             seq_time = self.sequential_results[dataset_size].total_time
+            
+            # Calculate speedup
             speedup = seq_time / total_time
             efficiency = (speedup / num_workers) * 100
-            
-            # Scalability index (Amdahl's law approximation)
-            scalability_index = speedup / num_workers
             
             result = ParallelBenchmarkResult(
                 implementation=impl_name,
@@ -69,30 +67,23 @@ class ParallelBenchmarkSuite:
                 total_time=total_time,
                 throughput=total_tokens / total_time,
                 speedup=speedup,
-                efficiency=efficiency,
-                scalability_index=scalability_index
+                efficiency=efficiency
             )
             
             self.parallel_results.append(result)
             
-            print(f"✓ {impl_name} ({num_workers} workers): {total_time:.4f}s, Speedup: {speedup:.2f}x")
+            print(f"   ✓ {num_workers} workers: {total_time:.4f}s | Speedup: {speedup:.2f}x | Efficiency: {efficiency:.2f}%")
 
     def save_results(self, filename="results/parallel_comprehensive.json"):
-        """Save all results to JSON safely"""
+        """Save results"""
         data = {
-            "sequential": [
-                r.to_dict() if hasattr(r, "to_dict") else r.__dict__
-                for r in self.sequential_results.values()
-            ],
-            "parallel": [
-                r.to_dict() if hasattr(r, "to_dict") else r.__dict__
-                for r in self.parallel_results
-                if hasattr(r, "implementation")  # keep only real parallel results
-            ]
+            "sequential": [r.to_dict() if hasattr(r, "to_dict") else r.__dict__ 
+                          for r in self.sequential_results.values()],
+            "parallel": [r.to_dict() for r in self.parallel_results]
         }
 
         os.makedirs("results", exist_ok=True)
         with open(filename, 'w') as f:
             json.dump(data, f, indent=2)
 
-        print(f"✅ Parallel benchmark results saved to {filename}")
+        print(f"\n✅ Results saved to {filename}")
