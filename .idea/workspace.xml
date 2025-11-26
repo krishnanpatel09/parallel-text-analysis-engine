@@ -5,27 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a26a7045-284e-491b-b2f5-06f877c98cae" name="Changes" comment="Loading_Testing_datasets">
-      <change afterPath="$PROJECT_DIR$/src/results/dataset_metrics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/efficiency_large.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/efficiency_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/efficiency_small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/execution_time.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/parallel_comprehensive.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/sequential_baseline.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/speedup_curves_large.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/speedup_curves_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/speedup_curves_small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_futures_process.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_multiprocessing.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_numba.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/strong_scaling_threading.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/throughput.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/results/total_execution_time.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ParallelBenchmarkResult.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ParallelBenchmarkResult.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ParallelTFIDF.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ParallelTFIDF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/dataset_metrics.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/dataset_metrics.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/efficiency_large.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/efficiency_large.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/efficiency_medium.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/efficiency_medium.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/efficiency_small.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/efficiency_small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/execution_time.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/execution_time.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/parallel_comprehensive.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/parallel_comprehensive.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/sequential_baseline.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/sequential_baseline.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/speedup_curves_large.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/speedup_curves_large.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/speedup_curves_medium.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/speedup_curves_medium.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/speedup_curves_small.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/speedup_curves_small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/throughput.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/throughput.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/results/total_execution_time.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/results/total_execution_time.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/dataSetGenrator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/dataSetGenrator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/text_preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/text_preprocess.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +64,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.ParallelTFIDF.executor": "Run",
+    "Python.dataSetGenrator.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -92,6 +86,8 @@
       <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\src\utils" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\src\datasets" />
+      <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\src" />
       <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\src\sequential" />
       <recent name="C:\Users\viswa\PycharmProjects\parallel-text-analysis-engine\datasets\test" />
     </key>

@@ -11,7 +11,7 @@ class DatasetGenerator:
         datasets = {
             'small': (10, 200),       # 10 files, ~200 unique words/file
             'medium': (100, 1000),    # 100 files, ~1000 unique words/file
-            'large': (1000, 5000)     # 1000 files, ~5000 unique words/file
+            'large': (700, 3000)     # 1000 files, ~5000 unique words/file
         }
 
         for size, (num_files, vocab_per_file) in datasets.items():
