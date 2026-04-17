@@ -3,13 +3,7 @@
   <p>
     A modular Python system for large scale text processing, TF-IDF analysis, benchmarking, and Numba-based parallel acceleration.
   </p>
-  <p>
-    <img src="https://img.shields.io/badge/Python-3-blue" alt="Python 3" />
-    <img src="https://img.shields.io/badge/NumPy-Numerical%20Computing-informational" alt="NumPy" />
-    <img src="https://img.shields.io/badge/NLTK-Text%20Processing-success" alt="NLTK" />
-    <img src="https://img.shields.io/badge/Numba-Parallel%20Acceleration-orange" alt="Numba" />
-    <img src="https://img.shields.io/badge/Matplotlib-Visualization-red" alt="Matplotlib" />
-  </p>
+ <p> <a href="https://www.python.org/" target="_blank"> <img src="https://img.shields.io/badge/Python-3-blue" /> </a> <a href="https://numpy.org/" target="_blank"> <img src="https://img.shields.io/badge/NumPy-Numerical%20Computing-informational" /> </a> <a href="https://www.nltk.org/" target="_blank"> <img src="https://img.shields.io/badge/NLTK-Text%20Processing-success" /> </a> <a href="https://numba.pydata.org/" target="_blank"> <img src="https://img.shields.io/badge/Numba-Parallel%20Acceleration-orange" /> </a> <a href="https://matplotlib.org/" target="_blank"> <img src="https://img.shields.io/badge/Matplotlib-Visualization-red" /> </a> </p>
 </div>
 
 <hr>
