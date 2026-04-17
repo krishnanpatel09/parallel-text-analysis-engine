@@ -1,191 +1,294 @@
-<h1>PARALLEL TEXT ANALYSIS ENGINE</h1>
+<div align="center">
+  <h1>Parallel Text Analysis Engine</h1>
+  <p>
+    A modular Python system for large scale text processing, TF-IDF analysis, benchmarking, and Numba-based parallel acceleration.
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/Python-3-blue" alt="Python 3" />
+    <img src="https://img.shields.io/badge/NumPy-Numerical%20Computing-informational" alt="NumPy" />
+    <img src="https://img.shields.io/badge/NLTK-Text%20Processing-success" alt="NLTK" />
+    <img src="https://img.shields.io/badge/Numba-Parallel%20Acceleration-orange" alt="Numba" />
+    <img src="https://img.shields.io/badge/Matplotlib-Visualization-red" alt="Matplotlib" />
+  </p>
+</div>
 
-Overview
+<hr>
 
-This project implements a modular text processing engine designed to analyze large-scale text corpora efficiently. It provides both a sequential baseline and a parallel implementation using Numba to evaluate performance improvements in real-world text processing workflows.
+<h2>Overview</h2>
+<p>
+  This project implements a modular text processing engine designed to analyze large scale text corpora efficiently.
+  It provides both a sequential baseline and a Numba-accelerated parallel implementation to evaluate performance
+  improvements in practical text processing workloads.
+</p>
+<p>
+  The engine processes multiple documents, performs preprocessing, computes word frequencies, calculates TF-IDF scores,
+  and exports benchmarking results and visualizations. It is built to study execution time, throughput, speedup,
+  parallel efficiency, and scaling behavior in a clear and repeatable way.
+</p>
 
-The system processes multiple documents, performs preprocessing, computes word frequencies, and calculates TF-IDF scores. It also includes benchmarking and visualization to study execution time, throughput, speedup, and parallel efficiency.
+<h2>Key Features</h2>
+<ul>
+  <li>End to end text processing pipeline</li>
+  <li>Synthetic dataset generation at multiple scales</li>
+  <li>Word frequency computation</li>
+  <li>TF-IDF calculation</li>
+  <li>Sequential and parallel execution modes</li>
+  <li>Numba-based acceleration using JIT compilation</li>
+  <li>Benchmarking and performance visualization</li>
+  <li>Export of results as JSON files and plots</li>
+</ul>
 
-Key Features
+<h2>Project Motivation</h2>
+<p>
+  Modern software systems generate large volumes of unstructured text, including logs, user interactions, and application data.
+  Processing this text efficiently is important when dataset size and vocabulary complexity grow.
+</p>
+<p>This project focuses on:</p>
+<ul>
+  <li>Identifying bottlenecks in text processing workflows</li>
+  <li>Evaluating practical parallelization strategies</li>
+  <li>Understanding trade-offs in speedup and efficiency</li>
+  <li>Applying high performance computing ideas to a real software project</li>
+</ul>
 
-• End-to-end text processing pipeline
-• Synthetic dataset generation at multiple scales
-• Word frequency computation
-• TF-IDF calculation
-• Sequential and parallel execution modes
-• Numba-based acceleration using JIT compilation
-• Performance benchmarking and visualization
-• Export of results as JSON and plots
+<h2>System Architecture</h2>
+<p>The engine follows a modular pipeline design:</p>
 
-Project Motivation
+<table>
+  <tr>
+    <td align="center"><b>1</b></td>
+    <td>Dataset Generation</td>
+  </tr>
+  <tr>
+    <td align="center"><b>2</b></td>
+    <td>File Loading</td>
+  </tr>
+  <tr>
+    <td align="center"><b>3</b></td>
+    <td>Preprocessing and Tokenization</td>
+  </tr>
+  <tr>
+    <td align="center"><b>4</b></td>
+    <td>Word Frequency Computation</td>
+  </tr>
+  <tr>
+    <td align="center"><b>5</b></td>
+    <td>TF-IDF Computation</td>
+  </tr>
+  <tr>
+    <td align="center"><b>6</b></td>
+    <td>Benchmarking</td>
+  </tr>
+  <tr>
+    <td align="center"><b>7</b></td>
+    <td>Visualization</td>
+  </tr>
+</table>
 
-Modern systems generate large volumes of unstructured text such as logs and user interactions. Processing this data efficiently is critical.
+<p>Main workflow entry point:</p>
+<p><code>src/main.py</code></p>
 
-This project focuses on:
+<h2>Execution Modes</h2>
 
-• Identifying bottlenecks in text processing
-• Evaluating parallelization strategies
-• Understanding performance trade-offs such as speedup and efficiency
-• Applying high-performance computing concepts in practice
+<h3>Sequential Baseline</h3>
+<ul>
+  <li>Pure Python implementation</li>
+  <li>Used as the reference for performance comparison</li>
+  <li>Processes text stage by stage</li>
+  <li>Records detailed execution metrics</li>
+</ul>
 
-System Architecture
+<h3>Parallel Mode, Numba Accelerated</h3>
+<ul>
+  <li>Uses JIT compiled kernels</li>
+  <li>Converts text into numeric arrays for efficient processing</li>
+  <li>Applies parallel loops using <code>prange</code></li>
+  <li>Accelerates core numerical computations</li>
+</ul>
 
-The system follows a modular pipeline design:
+<h2>Dataset</h2>
+<p>Synthetic datasets are generated automatically for controlled and repeatable experiments.</p>
 
-Dataset Generation
-File Loading
-Preprocessing and Tokenization
-Word Frequency Computation
-TF-IDF Computation
-Benchmarking
-Visualization
+<table>
+  <tr>
+    <th>Dataset Size</th>
+    <th>Files</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>Small</td>
+    <td>10</td>
+    <td>Quick baseline and low overhead testing</td>
+  </tr>
+  <tr>
+    <td>Medium</td>
+    <td>100</td>
+    <td>Balanced workload for performance comparison</td>
+  </tr>
+  <tr>
+    <td>Large</td>
+    <td>500</td>
+    <td>Stress testing and scalability analysis</td>
+  </tr>
+</table>
 
-The main workflow is controlled through:
+<p>Dataset location:</p>
+<p><code>datasets/test/</code></p>
 
-src/main.py
+<p>Each dataset includes:</p>
+<ul>
+  <li>Controlled vocabulary</li>
+  <li>Consistent token distribution</li>
+  <li>Predictable scaling characteristics</li>
+</ul>
 
-Execution Modes
-Sequential Baseline
+<h2>Tech Stack</h2>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Tools</th>
+  </tr>
+  <tr>
+    <td>Language</td>
+    <td>Python 3</td>
+  </tr>
+  <tr>
+    <td>Numerical Processing</td>
+    <td>NumPy</td>
+  </tr>
+  <tr>
+    <td>Text Processing</td>
+    <td>NLTK</td>
+  </tr>
+  <tr>
+    <td>Parallel Acceleration</td>
+    <td>Numba</td>
+  </tr>
+  <tr>
+    <td>Visualization</td>
+    <td>Matplotlib</td>
+  </tr>
+</table>
 
-• Pure Python implementation
-• Used as reference for performance comparison
-• Processes text step-by-step
-• Records execution metrics
+<h2>Installation</h2>
 
-Parallel (Numba-Accelerated)
+<p>Clone the repository:</p>
+<pre><code>git clone https://github.com/your-username/parallel-text-analysis-engine.git
+cd parallel-text-analysis-engine</code></pre>
 
-• Uses JIT-compiled kernels
-• Converts text into numeric arrays
-• Applies parallel loops using prange
-• Improves performance of core computations
+<p>Install dependencies:</p>
+<pre><code>pip install -r requirements.txt</code></pre>
 
-Dataset
+<h2>Usage</h2>
 
-Synthetic datasets are generated automatically.
+<p>Run the full pipeline:</p>
+<pre><code>python3 src/main.py</code></pre>
 
-Location:
+<p>This will:</p>
+<ul>
+  <li>Generate datasets</li>
+  <li>Run sequential analysis</li>
+  <li>Run parallel analysis</li>
+  <li>Store results and plots</li>
+</ul>
 
-datasets/test/
+<h2>Output</h2>
 
-Sizes:
+<p>All generated results are stored in:</p>
+<p><code>results/</code></p>
 
-• Small: 10 files
-• Medium: 100 files
-• Large: 500 files
+<p>Includes:</p>
+<ul>
+  <li>JSON result files</li>
+  <li>Benchmark comparison outputs</li>
+  <li>Performance plots and charts</li>
+</ul>
 
-Each dataset includes:
+<p>Main output files:</p>
+<pre><code>sequential_baseline.json
+parallel_comprehensive.json</code></pre>
 
-• Controlled vocabulary
-• Token distribution
-• Predictable scaling
+<h2>Performance Highlights</h2>
+<ul>
+  <li>Execution time scales close to linearly with dataset size</li>
+  <li>Word counting is the main computational bottleneck</li>
+  <li>Numba achieves about 2x to 5x speedup depending on workload size</li>
+  <li>Throughput increases significantly on larger datasets</li>
+  <li>Parallel efficiency drops when worker count becomes too high</li>
+  <li>Memory bandwidth limits scalability at larger sizes</li>
+</ul>
 
-This ensures repeatable experiments.
+<table>
+  <tr>
+    <th>Dataset</th>
+    <th>Approximate Best Speedup</th>
+  </tr>
+  <tr>
+    <td>Small</td>
+    <td>~5.2x</td>
+  </tr>
+  <tr>
+    <td>Medium</td>
+    <td>~2.3x</td>
+  </tr>
+  <tr>
+    <td>Large</td>
+    <td>~2.5x</td>
+  </tr>
+</table>
 
-Tech Stack
-
-• Python 3
-• NumPy
-• NLTK
-• Numba
-• Matplotlib
-
-Installation
-
-Clone the repository:
-
-git clone https://github.com/your-username/parallel-text-analysis-engine.git
-
-cd parallel-text-analysis-engine
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Usage
-
-Run the full pipeline:
-
-python3 src/main.py
-
-This will:
-
-• Generate datasets
-• Run sequential analysis
-• Run parallel analysis
-• Save results and plots
-
-Output
-
-Results are stored in:
-
-results/
-
-Includes:
-
-• JSON files
-
-sequential_baseline.json
-parallel_comprehensive.json
-
-• Plots
-
-execution time
-throughput
-speedup
-efficiency
-Performance Highlights
-
-Key findings from experiments :
-
-• Execution time scales linearly with dataset size
-• Word counting is the main bottleneck
-• Numba achieves 2x to 5x speedup
-• Throughput increases significantly on large datasets
-• Parallel efficiency decreases with too many workers
-• Memory bandwidth limits scalability
-
-Example results:
-
-• Small dataset speedup: ~5.2x
-• Medium dataset speedup: ~2.3x
-• Large dataset speedup: ~2.5x
-
-Project Structure
-
-parallel-text-analysis-engine/
-│
+<h2>Project Structure</h2>
+<pre><code>parallel-text-analysis-engine/
 ├── datasets/
 ├── results/
 ├── src/
-│ ├── main.py
-│ ├── utils/
-│ ├── sequential/
-│ ├── parallel/
-│
+│   ├── main.py
+│   ├── utils/
+│   ├── sequential/
+│   └── parallel/
 ├── Dockerfile
 ├── docker-compose.yaml
 ├── requirements.txt
-├── .gitignore
+└── .gitignore</code></pre>
 
-Key Learnings
+<h2>Key Learnings</h2>
+<ul>
+  <li>Data layout matters as much as the choice of tool</li>
+  <li>Converting text to numeric arrays enables effective parallelism</li>
+  <li>More threads do not always improve performance</li>
+  <li>JIT overhead can dominate small workloads</li>
+  <li>A strong sequential baseline is essential for meaningful comparison</li>
+</ul>
 
-• Data layout matters more than tools
-• Converting text to numeric arrays enables parallelism
-• More threads do not always improve performance
-• JIT overhead affects small workloads
-• Strong baseline is critical for evaluation
+<h2>Limitations</h2>
+<ul>
+  <li>Uses synthetic datasets only</li>
+  <li>Limited preprocessing features</li>
+  <li>Only CPU-based parallelism is explored</li>
+  <li>Some stages of the pipeline remain sequential</li>
+</ul>
 
-Limitations
+<h2>Future Work</h2>
+<ul>
+  <li>Use real world datasets</li>
+  <li>Add richer NLP preprocessing</li>
+  <li>Integrate GPU acceleration</li>
+  <li>Explore distributed systems such as Spark</li>
+  <li>Improve benchmarking with repeated trials and statistical summaries</li>
+</ul>
 
-• Uses synthetic datasets only
-• Limited preprocessing features
-• Only CPU-based parallelism explored
-• Some pipeline stages remain sequential
+<h2>Why This Project Matters</h2>
+<p>
+  This project demonstrates how high performance computing concepts can be applied to a practical software problem.
+  It moves beyond a simple text analytics script and builds a structured experimental platform for profiling,
+  optimization, and scalability analysis.
+</p>
 
-Future Work
+<h2>Author</h2>
+<p>
+  Krishna Nikunjkumar Patel
+</p>
 
-• Use real-world datasets
-• Add advanced NLP preprocessing
-• Integrate GPU acceleration
-• Explore distributed systems like Spark
-• Improve benchmarking with multiple runs
+<div align="center">
+  <h3>If you found this project useful, consider giving it a star.</h3>
+</div>
