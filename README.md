@@ -14,7 +14,7 @@
 
 <hr>
 
-<h2>📌Overview</h2>
+<h2>📌 Overview</h2>
 <p>
   This project implements a modular text processing engine designed to analyze large scale text corpora efficiently.
   It provides both a sequential baseline and a Numba-accelerated parallel implementation to evaluate performance
@@ -26,7 +26,7 @@
   parallel efficiency, and scaling behavior in a clear and repeatable way.
 </p>
 
-<h2>🎯Project Motivation</h2>
+<h2>🎯 Project Motivation</h2>
 <p>
   Modern software systems generate large volumes of unstructured text, including logs, user interactions, and application data.
   Processing this text efficiently is important when dataset size and vocabulary complexity grow.
@@ -39,7 +39,7 @@
   <li>Applying high performance computing ideas to a real software project</li>
 </ul>
 
-<h2>🚀Key Features</h2>
+<h2>🚀 Key Features</h2>
 <ul>
   <li>End to end text processing pipeline</li>
   <li>Synthetic dataset generation at multiple scales</li>
@@ -51,7 +51,7 @@
   <li>Export of results as JSON files and plots</li>
 </ul>
 
-<h2>🏗️System Architecture</h2>
+<h2>🏗️ System Architecture</h2>
 <p>The engine follows a modular pipeline design:</p>
 
 <table>
@@ -88,7 +88,7 @@
 <p>Main workflow entry point:</p>
 <p><code>src/main.py</code></p>
 
-<h2>⚙️Execution Modes</h2>
+<h2>⚙️ Execution Modes</h2>
 
 <h3>Sequential Baseline</h3>
 <ul>
@@ -106,7 +106,7 @@
   <li>Accelerates core numerical computations</li>
 </ul>
 
-<h2>📂Dataset</h2>
+<h2>📂 Dataset</h2>
 <p>Synthetic datasets are generated automatically for controlled and repeatable experiments.</p>
 
 <table>
@@ -142,7 +142,7 @@
   <li>Predictable scaling characteristics</li>
 </ul>
 
-<h2>🧰Tech Stack</h2>
+<h2>🧰 Tech Stack</h2>
 <table>
   <tr>
     <th>Category</th>
@@ -170,7 +170,7 @@
   </tr>
 </table>
 
-<h2>📁Project Structure</h2>
+<h2>📁 Project Structure</h2>
 <pre><code>parallel-text-analysis-engine/
 ├── datasets/
 ├── results/
@@ -184,7 +184,7 @@
 ├── requirements.txt
 └── .gitignore</code></pre>
 
-<h2>🛠️Installation</h2>
+<h2>🛠️ Installation</h2>
 
 <p>Clone the repository:</p>
 <pre><code>git clone https://github.com/your-username/parallel-text-analysis-engine.git
@@ -193,7 +193,7 @@ cd parallel-text-analysis-engine</code></pre>
 <p>Install dependencies:</p>
 <pre><code>pip install -r requirements.txt</code></pre>
 
-<h2>▶️Usage</h2>
+<h2>▶️ Usage</h2>
 
 <p>Run the full pipeline:</p>
 <pre><code>python3 src/main.py</code></pre>
@@ -206,7 +206,7 @@ cd parallel-text-analysis-engine</code></pre>
   <li>Store results and plots</li>
 </ul>
 
-<h2>📊Output</h2>
+<h2>📊 Output</h2>
 
 <p>All generated results are stored in:</p>
 <p><code>results/</code></p>
@@ -222,7 +222,7 @@ cd parallel-text-analysis-engine</code></pre>
 <pre><code>sequential_baseline.json
 parallel_comprehensive.json</code></pre>
 
-<h2>📈Performance Highlights</h2>
+<h2>📈 Performance Highlights</h2>
 <ul>
   <li>Execution time scales close to linearly with dataset size</li>
   <li>Word counting is the main computational bottleneck</li>
@@ -253,7 +253,7 @@ parallel_comprehensive.json</code></pre>
 
 
 
-<h2>📚Key Learnings</h2>
+<h2>📚 Key Learnings</h2>
 <ul>
   <li>Data layout matters as much as the choice of tool</li>
   <li>Converting text to numeric arrays enables effective parallelism</li>
@@ -262,7 +262,7 @@ parallel_comprehensive.json</code></pre>
   <li>A strong sequential baseline is essential for meaningful comparison</li>
 </ul>
 
-<h2>⚠️Limitations</h2>
+<h2>⚠️ Limitations</h2>
 <ul>
   <li>Uses synthetic datasets only</li>
   <li>Limited preprocessing features</li>
@@ -270,7 +270,7 @@ parallel_comprehensive.json</code></pre>
   <li>Some stages of the pipeline remain sequential</li>
 </ul>
 
-<h2>🔮Future Work</h2>
+<h2>🔮 Future Work</h2>
 <ul>
   <li>Use real world datasets</li>
   <li>Add richer NLP preprocessing</li>
@@ -279,14 +279,14 @@ parallel_comprehensive.json</code></pre>
   <li>Improve benchmarking with repeated trials and statistical summaries</li>
 </ul>
 
-<h2>💡Why This Project Matters</h2>
+<h2>💡 Why This Project Matters</h2>
 <p>
   This project demonstrates how high performance computing concepts can be applied to a practical software problem.
   It moves beyond a simple text analytics script and builds a structured experimental platform for profiling,
   optimization, and scalability analysis.
 </p>
 
-<h2>👤Author</h2>
+<h2>👤 Author</h2>
 <p>
   Krishna Nikunjkumar Patel
 </p>
